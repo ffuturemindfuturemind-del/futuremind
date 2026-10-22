@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future&Mind — Ferramentas Digitais | Compre, abra e use</title>
+<meta name="description" content="Future&Mind Produtos Digitais — ferramentas em HTML, CSS e JavaScript que resolvem problemas do dia a dia. Compre, abra e use no celular e no computador.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lucide@1/dist/umd/lucide.min.js"></script>
+<style>
+  :root{
+    --bg:#070b16;
+    --bg2:#0b1122;
+    --card:#111a30;
+    --card2:#16213b;
+    --text:#eaf0ff;
+    --muted:#8fa0c8;
+    --accent:#22d3ee;
+    --accent-soft:rgba(34,211,238,.14);
+    --accent2:#a855f7;
+    --accent2-soft:rgba(168,85,247,.16);
+    --border:rgba(143,160,200,.16);
+    --radius:18px;
+    --bot:"https://t.me/futuremind_ferramentas_bot";
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Red Hat Display',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-2;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(34,211,238,.10), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(168,85,247,.12), transparent 45%),
+      radial-gradient(circle at 50% 90%, rgba(34,211,238,.06), transparent 50%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:-1;opacity:.35;
+    background-image:linear-gradient(rgba(143,160,200,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(143,160,200,.05) 1px, transparent 1px);
+    background-size:44px 44px;
+    pointer-events:none;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1180px;margin:0 auto;padding:0 24px}
+  section{padding:88px 0}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--accent-soft);color:var(--accent);
+    border:1px solid var(--accent);
+    font-size:13px;font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;padding:7px 16px;border-radius:999px;margin-bottom:20px;
+  }
+  h2.section-title{font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.12;letter-spacing:-.02em;margin-bottom:14px}
+  .section-sub{color:var(--muted);font-size:17px;max-width:640px;margin-bottom:44px}
+  .text-center{text-align:center}
+  .text-center .section-sub{margin-left:auto;margin-right:auto}
+  .grad-text{background:linear-gradient(110deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ===== SIDEBAR / NAV ===== */
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;width:250px;z-index:60;
+    background:rgba(11,17,34,.92);backdrop-filter:blur(14px);
+    border-right:1px solid var(--border);
+    display:flex;flex-direction:column;padding:28px 22px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+  .brand-mark{
+    width:46px;height:46px;border-radius:14px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;color:#070b16;
+    box-shadow:0 0 24px rgba(34,211,238,.4);
+  }
+  .brand-name{font-weight:800;font-size:17px;line-height:1.2}
+  .brand-name small{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .nav-links{list-style:none;display:flex;flex-direction:column;gap:6px;flex:1}
+  .nav-links a{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 14px;border-radius:12px;color:var(--muted);
+    font-weight:600;font-size:15px;transition:all .2s;
+  }
+  .nav-links a:hover,.nav-links a.active{background:var(--accent-soft);color:var(--accent)}
+  .nav-links a i{color:var(--accent)}
+  .sidebar-bot{
+    margin-top:auto;background:linear-gradient(135deg,var(--accent2),var(--accent));
+    color:#070b16;font-weight:800;font-size:14px;text-align:center;
+    padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;
+    transition:transform .15s;
+  }
+  .sidebar-bot:hover{transform:translateY(-2px)}
+  .main{margin-left:250px}
+  .topbar{display:none}
+  @media(max-width:960px){
+    .sidebar{display:none}
+    .main{margin-left:0}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:55;padding:14px 20px;
+      background:rgba(7,11,22,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+    }
+    .topbar .brand{margin:0}
+    .menu-toggle{background:none;border:1px solid var(--border);color:var(--text);width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .mobile-menu{display:none;position:fixed;inset:0;z-index:70;background:var(--bg2);padding:24px;flex-direction:column}
+    .mobile-menu.open{display:flex}
+    .mobile-menu .nav-links{margin-top:30px}
+    .mobile-close{align-self:flex-end;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer}
+  }
+
+  /* ===== HERO ===== */
+  .hero{padding:90px 0 70px;text-align:center;position:relative}
+  .hero-logo{
+    width:120px;height:120px;border-radius:50%;margin:0 auto 28px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;color:#070b16;
+    box-shadow:0 0 60px rgba(34,211,238,.35),0 0 100px rgba(168,85,247,.25);
+    animation:float 5s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .hero h1{font-size:clamp(34px,5.5vw,60px);font-weight:900;line-height:1.05;letter-spacing:-.03em;margin-bottom:18px}
+  .hero .tagline{font-size:15px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+  .hero p.lead{font-size:19px;color:var(--muted);max-width:620px;margin:0 auto 34px}
+  .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:44px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 28px;border-radius:14px;font-weight:700;font-size:15px;
+    cursor:pointer;border:none;transition:transform .15s, box-shadow .2s;font-family:inherit;
+  }
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#070b16;box-shadow:0 8px 30px rgba(34,211,238,.35)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(34,211,238,.45)}
+  .btn-ghost{background:var(--card);color:var(--text);border:1px solid var(--border)}
+  .btn-ghost:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .badges{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--card);border:1px solid var(--border);
+    padding:10px 18px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--muted);
+  }
+  .badge i{color:var(--accent)}
+
+  /* ===== SEARCH ===== */
+  .search-wrap{max-width:760px;margin:0 auto}
+  .search-box{
+    display:flex;gap:10px;background:var(--card);border:1px solid var(--border);
+    border-radius:16px;padding:8px;margin-bottom:18px;
+  }
+  .search-box input{
+    flex:1;background:transparent;border:none;outline:none;color:var(--text);
+    font-family:inherit;font-size:16px;padding:12px 16px;
+  }
+  .search-box input::placeholder{color:var(--muted)}
+  .problem-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-top:20px}
+  .problem-box label{display:block;font-weight:700;font-size:15px;margin-bottom:10px;color:var(--accent)}
+  .problem-box textarea{
+    width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+    color:var(--text);font-family:inherit;font-size:15px;padding:14px;min-height:70px;resize:vertical;outline:none;
+  }
+  .problem-box textarea:focus{border-color:var(--accent)}
+  .suggest-results{margin-top:16px;display:none;flex-direction:column;gap:10px}
+  .suggest-results.show{display:flex}
+  .suggest-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .suggest-item strong{color:var(--accent)}
+  .suggest-item .price{font-weight:800;color:var(--accent2)}
+
+  /* ===== CATEGORIES FILTER ===== */
+  .cat-filter{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+  .cat-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--card);border:1px solid var(--border);color:var(--muted);
+    padding:10px 18px;border-radius:999px;font-family:inherit;font-weight:600;font-size:14px;
+    cursor:pointer;transition:all .2s;
+  }
+  .cat-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .cat-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#070b16;border-color:transparent}
+  .cat-btn i{width:16px;height:16px}
+
+  /* ===== TOOL CARDS ===== */
+  .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+  .tool-card{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:26px;display:flex;flex-direction:column;transition:transform .2s, border-color .2s;position:relative;overflow:hidden;
+  }
+  .tool-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .tool-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity .2s}
+  .tool-card:hover::before{opacity:1}
+  .tool-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .tool-icon{
+    width:48px;height:48px;border-radius:14px;flex-shrink:0;
+    background:var(--accent2-soft);display:flex;align-items:center;justify-content:center;color:var(--accent2);
+  }
+  .tool-head h4{font-size:17px;font-weight:800;line-height:1.25}
+  .tool-cat{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  .tool-desc{font-size:14px;color:var(--muted);margin-bottom:16px;flex:1}
+  .tool-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .pill{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
+  .tool-price{display:flex;align-items:baseline;gap:6px;margin-bottom:16px}
+  .tool-price .value{font-size:26px;font-weight:900;color:var(--accent)}
+  .tool-price .once{font-size:12px;color:var(--muted)}
+  .tool-actions{display:flex;gap:10px}
+  .tool-actions .btn{flex:1;justify-content:center;padding:11px 14px;font-size:13.5px}
+  .btn-buy{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#070b16;font-weight:800}
+  .btn-detail{background:var(--card2);color:var(--text);border:1px solid var(--border)}
+  .no-results{text-align:center;color:var(--muted);padding:40px;grid-column:1/-1}
+
+  /* ===== MODAL ===== */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;z-index:100;background:rgba(4,7,15,.8);
+    backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.open{display:flex}
+  .modal{
+    background:var(--bg2);border:1px solid var(--border);border-radius:20px;
+    max-width:620px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative;
+  }
+  .modal-close{position:absolute;top:18px;right:18px;background:var(--card);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .modal h3{font-size:24px;font-weight:800;margin-bottom:6px;padding-right:40px}
+  .modal .modal-cat{font-size:12px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:18px}
+  .modal .modal-price{font-size:30px;font-weight:900;color:var(--accent);margin-bottom:20px}
+  .modal h5{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--accent2);margin:20px 0 8px}
+  .modal p{font-size:14.5px;color:var(--muted);margin-bottom:8px}
+  .modal ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+  .modal ul li{display:flex;gap:10px;font-size:14px;color:var(--muted);align-items:flex-start}
+  .modal ul li i{color:var(--accent);flex-shrink:0;margin-top:3px}
+  .modal .btn-buy{width:100%;justify-content:center;margin-top:24px;padding:15px;font-size:15px}
+
+  /* ===== ABOUT ===== */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr}}
+  .about-card{
+    background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;
+  }
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+  .stat{text-align:center;padding:18px;background:var(--card2);border-radius:14px;border:1px solid var(--border)}
+  .stat .num{font-size:26px;font-weight:900;color:var(--accent)}
+  .stat .lbl{font-size:12px;color:var(--muted);font-weight:600}
+
+  /* ===== CONTACT ===== */
+  .contact-form{max-width:640px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px}
+  .contact-form label{display:block;font-size:14px;font-weight:700;margin-bottom:8px;color:var(--muted)}
+  .contact-form select,.contact-form textarea,.contact-form input{
+    width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+    color:var(--text);font-family:inherit;font-size:15px;padding:14px;margin-bottom:18px;outline:none;
+  }
+  .contact-form select:focus,.contact-form textarea:focus,.contact-form input:focus{border-color:var(--accent)}
+  .contact-note{font-size:13px;color:var(--muted);text-align:center;margin-top:14px}
+  .contact-note a{color:var(--accent)}
+
+  /* ===== FAQ ===== */
+  .faq-list{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .faq-q{
+    width:100%;background:none;border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:20px 24px;font-family:inherit;font-size:15.5px;font-weight:700;color:var(--text);text-align:left;
+  }
+  .faq-q i{color:var(--accent);transition:transform .3s;flex-shrink:0}
+  .faq-item.open .faq-q i{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .faq-a-inner{padding:0 24px 22px;color:var(--muted);font-size:14.5px}
+
+  /* ===== FOOTER ===== */
+  footer{background:#05080f;color:var(--muted);padding:64px 0 32px;margin-top:60px;border-top:1px solid var(--border)}
+  .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;margin-bottom:40px}
+  footer h5{color:#fff;font-size:14px;font-weight:800;margin-bottom:16px;text-transform:uppercase;letter-spacing:.06em}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  footer a{font-size:14px;transition:color .2s}
+  footer a:hover{color:var(--accent)}
+  .footer-brand p{font-size:14px;margin-top:12px;max-width:280px}
+  .footer-bottom{border-top:1px solid var(--border);padding-top:24px;text-align:center;font-size:13px;color:#5a6a8f}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease}
+  .reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR (desktop) ===== -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark"><i data-lucide="brain" style="width:24px;height:24px"></i></div>
+    <div class="brand-name">Future&Mind<small>Ferramentas Digitais</small></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#inicio" class="active"><i data-lucide="home" style="width:18px;height:18px"></i> Início</a></li>
+    <li><a href="#categorias"><i data-lucide="layout-grid" style="width:18px;height:18px"></i> Categorias</a></li>
+    <li><a href="#sobre"><i data-lucide="info" style="width:18px;height:18px"></i> Sobre</a></li>
+    <li><a href="#faq"><i data-lucide="help-circle" style="width:18px;height:18px"></i> FAQ</a></li>
+  </ul>
+  <a href="https://t.me/futuremind_ferramentas_bot" target="_blank" rel="noopener" class="sidebar-bot">
+    <i data-lucide="send" style="width:18px;height:18px"></i> Comprar no Telegram
+  </a>
+</aside>
+
+<!-- ===== TOPBAR (mobile) ===== -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark" style="width:38px;height:38px"><i data-lucide="brain" style="width:20px;height:20px"></i></div>
+    <div class="brand-name" style="font-size:15px">Future&Mind</div>
+  </div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i data-lucide="menu" style="width:20px;height:20px"></i></button>
+</div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="menuClose">&times;</button>
+  <ul class="nav-links">
+    <li><a href="#inicio"><i data-lucide="home" style="width:18px;height:18px"></i> Início</a></li>
+    <li><a href="#categorias"><i data-lucide="layout-grid" style="width:18px;height:18px"></i> Categorias</a></li>
+    <li><a href="#sobre"><i data-lucide="info" style="width:18px;height:18px"></i> Sobre</a></li>
+    <li><a href="#faq"><i data-lucide="help-circle" style="width:18px;height:18px"></i> FAQ</a></li>
+    <li style="margin-top:20px"><a href="https://t.me/futuremind_ferramentas_bot" target="_blank" rel="noopener" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#070b16;font-weight:800"><i data-lucide="send" style="width:18px;height:18px"></i> Comprar no Telegram</a></li>
+  </ul>
+</div>
+
+<main class="main">
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="inicio">
+  <div class="container">
+    <div class="hero-logo reveal"><i data-lucide="brain" style="width:56px;height:56px"></i></div>
+    <p class="tagline reveal">Simples &bull; Úteis &bull; Para o seu dia a dia</p>
+    <h1 class="reveal">Future&Mind<br><span class="grad-text">Ferramentas Digitais</span></h1>
+    <p class="lead reveal">Apps em HTML, CSS e JavaScript que resolvem problemas reais do cotidiano, de profissionais, autônomos, MEIs e empresas. <strong style="color:var(--text)">Compre, abra e use.</strong></p>
+    <div class="hero-ctas reveal">
+      <a href="#categorias" class="btn btn-primary"><i data-lucide="sparkles" style="width:18px;height:18px"></i> Explorar ferramentas</a>
+      <a href="https://t.me/futuremind_ferramentas_bot" target="_blank" rel="noopener" class="btn btn-ghost"><i data-lucide="send" style="width:18px;height:18px"></i> Abrir loja no Telegram</a>
+    </div>
+    <div class="badges reveal">
+      <span class="badge"><i data-lucide="zap" style="width:15px;height:15px"></i> Uso imediato</span>
+      <span class="badge"><i data-lucide="smartphone" style="width:15px;height:15px"></i> Celular e computador</span>
+      <span class="badge"><i data-lucide="shield-check" style="width:15px;height:15px"></i> Pagamento seguro (Stripe)</span>
+      <span class="badge"><i data-lucide="library" style="width:15px;height:15px"></i> Biblioteca pessoal</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEARCH ===== -->
+<section id="busca" style="padding-top:20px">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="eyebrow"><i data-lucide="search" style="width:14px;height:14px"></i> Buscar ferramentas</span>
+      <h2 class="section-title">Encontre a ferramenta ideal</h2>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto">Busque pelo nome ou descreva o problema que precisa resolver e receba sugestões do catálogo.</p>
+    </div>
+    <div class="search-wrap reveal">
+      <div class="search-box">
+        <i data-lucide="search" style="width:20px;height:20px;color:var(--muted);margin:14px 0 0 14px"></i>
+        <input type="text" id="searchInput" placeholder="Buscar por nome… (ex: dinheiro, contrato, estoque)">
+      </div>
+      <div class="problem-box">
+        <label for="problemInput"><i data-lucide="lightbulb" style="width:15px;height:15px;display:inline;vertical-align:-2px"></i> Encontre uma ferramenta para o seu problema</label>
+        <textarea id="problemInput" placeholder="Descreva o que precisa resolver… Ex: organizar contas da casa, controlar despesas, fazer orçamento para cliente…"></textarea>
+        <button class="btn btn-primary" id="suggestBtn" style="margin-top:12px"><i data-lucide="wand-2" style="width:16px;height:16px"></i> Sugerir ferramentas</button>
+        <div class="suggest-results" id="suggestResults"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATEGORIES / TOOLS ===== -->
+<section id="categorias">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="eyebrow"><i data-lucide="layout-grid" style="width:14px;height:14px"></i> Catálogo</span>
+      <h2 class="section-title">Nossas <span class="grad-text">categorias</span></h2>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto">Clique em uma categoria para filtrar as ferramentas disponíveis. Cada uma com descrição, preço e compra direta no Telegram.</p>
+    </div>
+    <div class="cat-filter reveal" id="catFilter"></div>
+    <div class="tools-grid" id="toolsGrid"></div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="sobre" style="background:var(--bg2)">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="eyebrow"><i data-lucide="info" style="width:14px;height:14px"></i> Sobre a loja</span>
+        <h2 class="section-title">Sobre a <span class="grad-text">Future&Mind</span></h2>
+        <p style="color:var(--muted);margin-bottom:16px">A Future&Mind Produtos Digitais é uma loja digital que comercializa ferramentas desenvolvidas principalmente em HTML, CSS e JavaScript.</p>
+        <p style="color:var(--muted);margin-bottom:16px">Cada ferramenta tem uma finalidade prática: ajudar pessoas, profissionais, autônomos, MEIs e empresas a resolver problemas do cotidiano ou organizar atividades profissionais.</p>
+        <p style="color:var(--muted);margin-bottom:16px"><strong style="color:var(--accent)">Nossa missão</strong> é transformar conhecimento técnico em soluções acessíveis, que funcionam no celular e no computador, sem complicar. Você compra, abre e usa.</p>
+        <p style="color:var(--muted)"><em style="color:var(--accent2)">&ldquo;Construindo o que vem depois.&rdquo;</em></p>
+      </div>
+      <div class="about-card reveal">
+        <h4 style="font-size:18px;font-weight:800;margin-bottom:14px">A loja em números</h4>
+        <p style="color:var(--muted);font-size:14.5px">As ferramentas são organizadas em categorias, cobrindo desde a vida cotidiana até diagnósticos profissionais para clínicas, imobiliárias, escritórios de advocacia, comércios e restaurantes.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="num" id="statTools">0</div><div class="lbl">Ferramentas</div></div>
+          <div class="stat"><div class="num" id="statCats">0</div><div class="lbl">Categorias</div></div>
+          <div class="stat"><div class="num">24h</div><div class="lbl">Entrega automática</div></div>
+        </div>
+        <a href="https://t.me/futuremind_ferramentas_bot" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:24px"><i data-lucide="send" style="width:18px;height:18px"></i> Acessar loja no Telegram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contato">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="eyebrow"><i data-lucide="mail" style="width:14px;height:14px"></i> Contato e suporte</span>
+      <h2 class="section-title">Fale com a <span class="grad-text">gente</span></h2>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto">Envie sua mensagem. Respondemos o mais rápido possível.</p>
+    </div>
+    <form class="contact-form reveal" action="https://formsubmit.co/ffuturemindfuturemind@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="Contato via loja Future&Mind">
+      <input type="hidden" name="_captcha" value="false">
+      <label for="assunto">Assunto</label>
+      <select id="assunto" name="Assunto" required>
+        <option value="Dúvida geral">Dúvida geral</option>
+        <option value="Problema com pagamento">Problema com pagamento</option>
+        <option value="Não recebi a ferramenta">Não recebi a ferramenta</option>
+        <option value="Suporte técnico">Suporte técnico</option>
+        <option value="Parceria / comercial">Parceria / comercial</option>
+        <option value="Outro">Outro</option>
+      </select>
+      <label for="mensagem">Mensagem</label>
+      <textarea id="mensagem" name="Mensagem" rows="5" placeholder="Escreva sua mensagem aqui…" required></textarea>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center"><i data-lucide="send" style="width:18px;height:18px"></i> Enviar mensagem</button>
+      <p class="contact-note">Suporte por e-mail: <a href="mailto:ffuturemindfuturemind@gmail.com">ffuturemindfuturemind@gmail.com</a></p>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" style="background:var(--bg2)">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="eyebrow"><i data-lucide="help-circle" style="width:14px;height:14px"></i> FAQ</span>
+      <h2 class="section-title">Perguntas <span class="grad-text">frequentes</span></h2>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto">Tudo sobre comprar, abrir e usar suas ferramentas.</p>
+    </div>
+    <div class="faq-list reveal" id="faqList">
+      <div class="faq-item">
+        <button class="faq-q">Quais formas de pagamento estão disponíveis?<i data-lucide="plus" style="width:18px;height:18px"></i></button>
+        <div class="faq-a"><div class="faq-a-inner">Pix, cartão de crédito, cartão de débito e boleto bancário, processados pelo Stripe. A liberação do produto ocorre somente após a confirmação do pagamento.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">O pagamento via Pix libera o produto na hora?<i data-lucide="plus" style="width:18px;height:18px"></i></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim, assim que o Pix for confirmado pelo provedor de pagamentos. Enquanto o pagamento estiver pendente, o produto não é liberado.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Posso usar a ferramenta sem internet?<i data-lucide="plus" style="width:18px;height:18px"></i></button>
+        <div class="faq-a"><div class="faq-a-inner">Ferramentas marcadas como &ldquo;funciona offline&rdquo; podem ser usadas sem conexão após o download. Cada produto indica claramente se precisa de internet.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Posso baixar o arquivo HTML?<i data-lucide="plus" style="width:18px;height:18px"></i></button>
+        <div class="faq-a"><div class="faq-a-inner">Quando o produto permite download, sim. Lembre-se: um HTML baixado pode ser copiado. Para produtos com controle de acesso, a validação é feita no servidor.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Posso usar em mais de um dispositivo?<i data-lucide="plus" style="width:18px;height:18px"></i></button>
+        <div class="faq-a"><div class="faq-a-inner">Depende da licença de cada produto. Ferramentas com licença permanente podem ser usadas na sua conta. Produtos com código de acesso podem ter limite de dispositivos.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Como abro um arquivo HTML?<i data-lucide="plus" style="width:18px;height:18px"></i></button>
+        <div class="faq-a"><div class="faq-a-inner">Após a compra no bot do Telegram, você recebe o arquivo HTML e o código de acesso. Salve o arquivo no seu dispositivo e abra diretamente em qualquer navegador moderno (Chrome, Firefox, Safari, Edge), no celular ou no computador. Digite o código na primeira tela e use.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand" style="margin-bottom:8px">
+          <div class="brand-mark" style="width:40px;height:40px"><i data-lucide="brain" style="width:20px;height:20px"></i></div>
+          <div class="brand-name" style="color:#fff">Future&Mind</div>
+        </div>
+        <p>Construindo o que vem depois. Ferramentas digitais simples, úteis e para o seu dia a dia.</p>
+      </div>
+      <div>
+        <h5>Loja</h5>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#categorias">Categorias</a></li>
+          <li><a href="#busca">Buscar ferramentas</a></li>
+          <li><a href="https://t.me/futuremind_ferramentas_bot" target="_blank" rel="noopener">Comprar no Telegram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Suporte</h5>
+        <ul>
+          <li><a href="#faq">Perguntas frequentes</a></li>
+          <li><a href="#contato">Contato</a></li>
+          <li><a href="mailto:ffuturemindfuturemind@gmail.com">Central de suporte</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#sobre">Termos de uso</a></li>
+          <li><a href="#sobre">Política de privacidade</a></li>
+          <li><a href="#sobre">Política de compra</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Future&Mind Produtos Digitais. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+</main>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" id="modalClose" aria-label="Fechar"><i data-lucide="x" style="width:18px;height:18px"></i></button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var BOT = "https://t.me/futuremind_ferramentas_bot";
+  var CATS = [
+    {id:"todos", nome:"Todas", icon:"layout-grid"},
+    {id:"sop", nome:"Sistemas Pessoais", icon:"cpu"},
+    {id:"iev", nome:"Inteligência Empresarial", icon:"trending-up"},
+    {id:"doc", nome:"Documentos e Dados", icon:"file-text"},
+    {id:"add", nome:"Produtos Adicionais", icon:"package-plus"},
+    {id:"vid", nome:"Vida Cotidiana", icon:"home"},
+    {id:"aut", nome:"Automação Comercial", icon:"settings"},
+    {id:"res", nome:"Resolução de Problemas", icon:"puzzle"}
+  ];
+  var TOOLS = [
+    {cat:"sop", catNome:"Sistemas Operacionais Pessoais Inteligentes", nome:"Dinheiro OS", price:"79,90", icon:"wallet", short:"Sistema completo para controle de receitas, despesas e orçamento, com gráficos analíticos e gestão de fluxo de caixa diretamente no navegador.", full:"O Dinheiro OS é uma plataforma de gestão financeira pessoal que permite lançar receitas e despesas, gerenciar contas e visualizar orçamentos categorizados. O sistema processa dados localmente no seu navegador para gerar relatórios detalhados, gráficos de seis meses e resumos prontos para compartilhamento no WhatsApp.", problem:"Elimina a desorganização financeira através de uma visão centralizada de fluxo de caixa, orçamentos por categoria e projeção de saldos.", features:["Registro intuitivo de receitas e despesas","Monitoramento de contas vencidas e a vencer","Cálculo automático de limite diário de gastos","Orçamento detalhado por categoria","Gráficos analíticos de 6 meses","Resumo financeiro em imagem para WhatsApp"]},
+    {cat:"sop", catNome:"Sistemas Operacionais Pessoais Inteligentes", nome:"Memória Infinita", price:"49,90", icon:"database", short:"Organize suas ideias, projetos e aprendizados em um segundo cérebro digital privado, com busca rápida e armazenamento seguro no seu navegador.", full:"A Memória Infinita é uma ferramenta de gestão de conhecimento pessoal que permite registrar, categorizar e recuperar informações rapidamente. Funciona através de uma interface intuitiva onde você cria notas, tarefas e projetos armazenados localmente no seu dispositivo, garantindo total privacidade.", problem:"Elimina a dispersão de informações e o esquecimento de ideias valiosas através de um sistema de anotações centralizado e organizado.", features:["Categorização inteligente de registros","Busca integrada por etiquetas e palavras-chave","Sistema de favoritos para acesso rápido","Histórico de alterações","Importação e exportação em JSON","Ferramenta de resumo de conteúdo"]},
+    {cat:"sop", catNome:"Sistemas Operacionais Pessoais Inteligentes", nome:"Vida OS", price:"49,90", icon:"calendar-check", short:"Organize seu dia com um sistema operacional completo para gestão de tarefas, metas e produtividade, executado diretamente no seu navegador.", full:"O Vida OS é um ambiente centralizado para gerenciar tarefas e metas pessoais com foco em gestão de tempo. Ele funciona através de uma interface baseada em navegador que processa suas atividades diárias, permitindo reorganizar pendências e criar planos de ação otimizados.", problem:"Elimina a desorganização da rotina ao calcular automaticamente o que pode ser realizado com base no seu tempo disponível.", features:["Gestão de tarefas com estimativa de tempo e prazos","Sugestão de plano diário com base nos minutos livres","Reorganização automática de tarefas atrasadas","Sistema de priorização por pontos","Rastreamento de metas com progresso","Exportação de plano diário em imagem"]},
+    {cat:"sop", catNome:"Sistemas Operacionais Pessoais Inteligentes", nome:"Agenda Inteligente", price:"49,90", icon:"calendar-days", short:"Organize seus compromissos profissionais com esta agenda inteligente que funciona offline diretamente no seu navegador de internet.", full:"A Agenda Inteligente é uma solução compacta para o gerenciamento ágil de clientes e horários profissionais. O sistema opera inteiramente em arquivo único, permitindo agendar compromissos, gerar registros detalhados e exportar informações sem precisar de um servidor.", problem:"Elimina a desorganização de agendas manuais permitindo o registro rápido e o envio facilitado de compromissos para clientes.", features:["Autenticação por código de acesso","Cadastro detalhado de clientes e serviços","Agendamento com data, hora e duração","Exportação em imagem, texto ou PDF","Limpeza rápida de registros","Funciona 100% offline"]},
+    {cat:"iev", catNome:"Inteligência Empresarial e Vendas", nome:"Oportunidade IA", price:"79,90", icon:"sparkles", short:"Ferramenta de análise e validação de negócios para identificar oportunidades reais alinhadas ao seu perfil, orçamento e tempo disponível.", full:"O Oportunidade IA é um painel analítico completo para quem deseja validar modelos de negócio com segurança. A ferramenta processa seu perfil empreendedor e recursos atuais para cruzar dados e sugerir as melhores oportunidades de mercado, com plano de ação de 7 dias e calculadora de viabilidade.", problem:"Elimina a incerteza na escolha de um novo negócio ao cruzar dados de perfil pessoal com a viabilidade financeira da oportunidade.", features:["Radar de renda com recomendação personalizada","Calculadora de viabilidade financeira","Plano de validação prática para 7 dias","Painel comparativo de alternativas","Relatórios com gráficos de análise","Modo demonstração para teste rápido"]},
+    {cat:"iev", catNome:"Inteligência Empresarial e Vendas", nome:"Radar Financeiro", price:"49,90", icon:"radar", short:"Organize seu fluxo de caixa mensal com facilidade e segurança. Gere relatórios, salve seus radares e controle suas finanças diretamente no navegador.", full:"O Radar Financeiro é uma ferramenta de inteligência empresarial compacta que permite consolidar suas entradas, saídas e metas mensais em um único painel. Através de uma interface intuitiva, você insere dados financeiros e gera relatórios instantâneos exportáveis como imagem ou PDF.", problem:"Elimina a desorganização financeira ao centralizar o controle de entradas, saídas e metas em uma ferramenta prática e privada.", features:["Cadastro de entradas e saídas personalizáveis","Cálculo automático de saldo mensal","Geração de relatórios em PDF e imagem","Metas de economia mensais","Histórico de radares salvos","Envio direto via WhatsApp"]},
+    {cat:"iev", catNome:"Inteligência Empresarial e Vendas", nome:"Calculadora de Preço", price:"49,90", icon:"calculator", short:"Precifique seus produtos e serviços com precisão, calculando custos, taxas e margens de lucro de forma rápida e segura diretamente no seu navegador.", full:"Esta ferramenta permite gerenciar seus preços de venda considerando custos operacionais, impostos e margens desejadas em uma interface intuitiva. O sistema funciona localmente no navegador, garantindo privacidade total dos seus cálculos e dados de produtos.", problem:"Elimina a dificuldade e o erro humano no cálculo de margens de lucro, garantindo que o preço final cubra todos os custos e impostos.", features:["Cálculo automático de preço por margem e custos","Histórico de produtos e preços calculados","Exportação de resultados em PDF","Envio direto de preços via WhatsApp","Protegido por código de acesso","Simulador de impostos, comissões e taxas"]},
+    {cat:"iev", catNome:"Inteligência Empresarial e Vendas", nome:"Cobrança Fácil", price:"29,90", icon:"receipt", short:"Organize suas cobranças de forma ágil, segura e local, gerando documentos personalizados e mensagens prontas para envio via WhatsApp.", full:"O Cobrança Fácil é uma ferramenta focada em agilizar o processo de emissão de cobranças diretamente pelo seu navegador. Você insere os dados do cliente e da dívida para gerar um registro organizado, com opções de exportação em imagem, texto ou PDF.", problem:"Elimina a dificuldade de organizar valores a receber e agiliza a criação de mensagens de cobrança claras para envio imediato.", features:["Autenticação por código de acesso","Geração de cobranças com cálculo de juros por atraso","Exportação rápida para imagem e texto (WhatsApp)","Salvamento em PDF","Histórico de cobranças salvo no navegador","Campos para chave Pix e dados do devedor"]},
+    {cat:"iev", catNome:"Inteligência Empresarial e Vendas", nome:"Proposta Pro", price:"49,90", icon:"file-signature", short:"Crie propostas comerciais profissionais, organize seu histórico e envie orçamentos personalizados diretamente pelo seu navegador com segurança.", full:"O Proposta Pro é uma ferramenta voltada para a gestão de orçamentos comerciais, permitindo a criação, edição e organização de propostas de forma ágil. O software funciona inteiramente no seu navegador, gerando documentos prontos para envio em texto, imagem ou PDF.", problem:"Elimina a desorganização no envio de orçamentos, oferecendo um padrão profissional e um histórico centralizado das propostas enviadas.", features:["Autenticação via código de acesso","Gerador de propostas com campos customizáveis","Exportação em imagem, texto ou PDF","Gerenciador de histórico (Últimas Propostas)","Limpeza rápida para novos atendimentos","Cálculo simplificado de itens de investimento"]},
+    {cat:"iev", catNome:"Inteligência Empresarial e Vendas", nome:"Orçamento Rápido", price:"49,90", icon:"clipboard-list", short:"Crie orçamentos profissionais de forma ágil e segura, mantendo seus dados protegidos localmente em uma interface intuitiva e sem servidores.", full:"O Orçamento Rápido permite gerar orçamentos comerciais detalhados com cálculos automáticos e controle de histórico, tudo executado diretamente no seu navegador. Através de uma interface simplificada, você preenche dados do cliente e serviços, gerando documentos prontos para envio.", problem:"Elimina a demora na criação de propostas comerciais e a necessidade de sistemas complexos de gestão para pequenos negócios.", features:["Cadastro de dados do cliente e serviços","Geração com cálculo de descontos e validade","Exportação para imagem, texto ou PDF","Histórico de orçamentos salvo localmente","Proteção por código de acesso","Limpeza rápida para novos ciclos"]},
+    {cat:"doc", catNome:"Documentos, Dados e Desenvolvimento", nome:"Gerador de Contratos", price:"29,90", icon:"scroll-text", short:"Crie contratos profissionais de forma rápida e segura diretamente no seu navegador, sem necessidade de servidores ou bancos de dados externos.", full:"O Gerador de Contratos é uma ferramenta web em arquivo único que permite a criação ágil de documentos legais como prestação de serviços, vendas e aluguéis. Basta preencher os dados contratuais na interface e o sistema processa automaticamente o texto formatado para envio ou exportação.", problem:"Elimina a burocracia e o tempo gasto na redação manual de contratos recorrentes de prestação de serviço, venda ou aluguel.", features:["Modelos prontos de serviço, venda e aluguel","Geração com campos personalizados","Exportação do contrato final em PDF","Envio como imagem ou texto via WhatsApp","Controle de acesso por código","Histórico de últimos contratos gerados"]},
+    {cat:"doc", catNome:"Documentos, Dados e Desenvolvimento", nome:"Recibo Fácil", price:"29,90", icon:"file-check", short:"Emita recibos profissionais com facilidade, salve seu histórico e envie documentos em PDF ou imagem diretamente pelo seu navegador.", full:"O Recibo Fácil é uma ferramenta ágil para a emissão de recibos comerciais com suporte para armazenamento local. Você preenche os dados do pagador, valor e motivo, gerando o documento instantaneamente para salvar em PDF ou enviar como imagem, com histórico dos últimos recibos.", problem:"Elimina a necessidade de blocos de papel e softwares complexos para a emissão rápida de recibos de pagamento.", features:["Interface intuitiva de preenchimento","Geração em PDF ou imagem","Envio rápido via WhatsApp","Histórico de últimos recibos","Autenticação por código de acesso","Limpeza rápida para novos registros"]},
+    {cat:"add", catNome:"Produtos Adicionais da Loja", nome:"Ordem de Serviço", price:"49,90", icon:"wrench", short:"Ferramenta essencial para técnicos e assistências técnicas gerarem ordens de serviço profissionais com rapidez, organização e total privacidade.", full:"Esta ferramenta em arquivo único permite a criação, edição e gestão de ordens de serviço diretamente no navegador. Você preenche os dados do cliente e do equipamento, calcula valores e gera um documento pronto para impressão ou envio via WhatsApp.", problem:"Elimina a burocracia e a desorganização na emissão de ordens de serviço manuais, oferecendo um formato padronizado e profissional.", features:["Preenchimento de dados do cliente e equipamento","Geração de ordens de serviço em PDF","Compartilhamento via imagem ou texto","Controle de garantia e registro de entrada paga","Histórico de últimas ordens geradas","Proteção de acesso por código"]},
+    {cat:"vid", catNome:"Inteligência para a Vida Cotidiana", nome:"Casa no Automático", price:"49,90", icon:"home", short:"Organize a rotina doméstica e financeira com esta ferramenta inteligente que centraliza tarefas e contas diretamente no seu navegador.", full:"O Casa no Automático permite gerenciar tarefas recorrentes e despesas mensais de forma simples através de uma interface de organização pessoal. Ao inserir suas informações, o sistema gera registros organizados que podem ser compartilhados ou exportados para PDF e imagem.", problem:"Elimina a desorganização doméstica ao centralizar em uma única interface o controle de tarefas recorrentes e obrigações financeiras familiares.", features:["Cadastro de tarefas e contas com recorrência","Geração de código de acesso para segurança","Exportação de quadros como imagem","Relatórios em PDF","Envio direto via WhatsApp para grupos familiares","Histórico de itens feitos recentemente"]},
+    {cat:"vid", catNome:"Inteligência para a Vida Cotidiana", nome:"Planejador de Viagem", price:"49,90", icon:"plane", short:"Organize seus roteiros, controle gastos e crie itinerários completos de forma simples e totalmente privada direto no seu navegador.", full:"O Planejador de Viagem é uma ferramenta digital intuitiva que centraliza informações de destinos, datas e orçamento em um único lugar. Através de uma interface amigável, você insere dados de viagem para estruturar roteiros diários e gerenciar despesas previstas, com exportação em PDF.", problem:"Elimina a desorganização ao consolidar todas as informações vitais de uma viagem em um único fluxo de trabalho estruturado e portátil.", features:["Autenticação com código de acesso","Gerenciamento de roteiro diário e gastos","Cálculo de orçamento total e despesas","Exportação em PDF","Compartilhamento via texto ou imagem","Painel de histórico de viagens"]},
+    {cat:"aut", catNome:"Automação Comercial para Pequenos Negócios", nome:"Controle de Estoque", price:"49,90", icon:"package", short:"Otimize a gestão do seu pequeno estoque com esta ferramenta completa de registros, movimentações e relatórios, tudo rodando no seu navegador.", full:"O Controle de Estoque é uma solução prática para gerenciar entradas, saídas e ajustes de produtos em pequenos negócios. A ferramenta utiliza o armazenamento local do navegador para registrar movimentações, calcular custos e emitir relatórios de posição, com exportação via PDF ou imagem.", problem:"Elimina a desorganização manual, permitindo um registro preciso das entradas, saídas e a verificação rápida da posição do estoque.", features:["Registro de movimentações de entrada, saída e ajustes","Cálculo automático de posição e estoque mínimo","Geração de relatórios em PDF e imagens","Envio direto para fornecedores via WhatsApp","Histórico de movimentações e produtos","Protegido por código de acesso"]},
+    {cat:"aut", catNome:"Automação Comercial para Pequenos Negócios", nome:"Gestão de Clientes", price:"49,90", icon:"users", short:"Organize seu cadastro de clientes, histórico de atendimentos e datas de retorno de forma prática, segura e totalmente local no seu navegador.", full:"O Gestão de Clientes é uma ferramenta focada em centralizar o histórico de atendimento e dados de contato do seu público. Funciona através de uma interface intuitiva onde você cadastra o perfil do cliente, suas observações e a próxima data de agendamento, com exportação em imagem, texto ou PDF.", problem:"Elimina a desorganização no controle de clientes e o esquecimento de datas importantes de retorno e histórico comercial.", features:["Cadastro completo com WhatsApp e endereço","Registro de histórico detalhado por atendimento","Gerenciamento de datas para retorno","Exportação rápida da ficha em PDF","Envio via imagem ou texto para WhatsApp","Busca inteligente de clientes cadastrados"]},
+    {cat:"aut", catNome:"Automação Comercial para Pequenos Negócios", nome:"MEI Digital", price:"49,90", icon:"briefcase", short:"Organize seu faturamento, calcule impostos e gere relatórios mensais para o seu MEI de forma simples, privada e totalmente local no navegador.", full:"O MEI Digital é uma ferramenta focada em gestão básica de faturamento e controle de guias DAS para microempreendedores individuais. Você insere suas receitas mensais e dados operacionais, e o sistema processa automaticamente o resumo da situação atual do seu negócio.", problem:"Elimina a desorganização no controle de receitas mensais e facilita o acompanhamento do limite de faturamento anual do MEI.", features:["Autenticação via código de acesso","Cadastro de receitas mensais e histórico","Cálculo automático de faturamento e limites","Gerador de resumos financeiros mensais","Exportação em PDF, imagem ou texto","Envio direto via WhatsApp"]},
+    {cat:"aut", catNome:"Automação Comercial para Pequenos Negócios", nome:"Controle de Serviços", price:"29,90", icon:"clipboard-check", short:"Gerencie ordens de serviço de forma ágil e segura diretamente no seu navegador, sem necessidade de servidores ou bancos de dados externos.", full:"O Controle de Serviços é uma ferramenta otimizada para profissionais que precisam registrar atendimentos e gerar ordens de serviço rapidamente. Ele funciona como uma aplicação de página única onde todos os dados são inseridos e processados localmente, com geração de documentos em PDF, imagens ou compartilhamento via texto.", problem:"Elimina a burocracia e a falta de padronização no registro manual de serviços prestados por pequenos profissionais.", features:["Cadastro de ordens de serviço com detalhes","Geração em PDF","Exportação como imagem","Envio direto do resumo via WhatsApp","Gerenciamento de status (A fazer, Em andamento, Pronto, Entregue)","Proteção de acesso via código pessoal"]},
+    {cat:"res", catNome:"Resolução Inteligente de Problemas", nome:"Escolha Certa", price:"79,90", icon:"git-branch", short:"Ferramenta de análise multicritério para tomar decisões complexas de forma racional, ponderando pesos e comparando cenários com facilidade.", full:"O Escolha Certa é um motor de decisões que organiza critérios e opções para eliminar incertezas na hora de escolher. Você define o que importa, atribui pesos de 1 a 10 e compara alternativas com resultados ponderados e gráficos visuais, obtendo um ranking claro que justifica sua decisão.", problem:"Elimina a indecisão e o viés emocional em escolhas complexas através de uma análise quantitativa e estruturada.", features:["Motor de cálculos com pesos de 1 a 10","Comparação de múltiplas opções com ranking","Modelos de exemplo prontos","Ajuste dinâmico para simular cenários","Exportação em PDF, imagem ou texto","Suporte a modo noturno"]}
+  ];
+
+  // ===== Render category buttons =====
+  var catFilter = document.getElementById("catFilter");
+  var activeCat = "todos";
+  CATS.forEach(function(c){
+    var b = document.createElement("button");
+    b.className = "cat-btn" + (c.id==="todos"?" active":"");
+    b.dataset.cat = c.id;
+    b.innerHTML = '<i data-lucide="'+c.icon+'"></i> '+c.nome;
+    b.addEventListener("click", function(){
+      activeCat = c.id;
+      document.querySelectorAll(".cat-btn").forEach(function(x){x.classList.remove("active")});
+      b.classList.add("active");
+      renderTools();
+    });
+    catFilter.appendChild(b);
+  });
+
+  // ===== Render tools =====
+  var toolsGrid = document.getElementById("toolsGrid");
+  var searchQ = "";
+  function renderTools(){
+    toolsGrid.innerHTML = "";
+    var q = searchQ.toLowerCase().trim();
+    var list = TOOLS.filter(function(t){
+      var okCat = (activeCat==="todos" || t.cat===activeCat);
+      var okSearch = (!q || t.nome.toLowerCase().indexOf(q)>-1 || t.short.toLowerCase().indexOf(q)>-1 || t.catNome.toLowerCase().indexOf(q)>-1);
+      return okCat && okSearch;
+    });
+    if(list.length===0){
+      toolsGrid.innerHTML = '<div class="no-results"><i data-lucide="search-x" style="width:40px;height:40px;margin-bottom:12px;opacity:.5"></i><br>Nenhuma ferramenta encontrada. Tente outro termo ou categoria.</div>';
+    }
+    list.forEach(function(t, i){
+      var card = document.createElement("div");
+      card.className = "tool-card reveal";
+      card.innerHTML =
+        '<div class="tool-head"><div class="tool-icon"><i data-lucide="'+t.icon+'" style="width:22px;height:22px"></i></div>'+
+        '<div><span class="tool-cat">'+t.catNome+'</span><h4>'+t.nome+'</h4></div></div>'+
+        '<p class="tool-desc">'+t.short+'</p>'+
+        '<div class="tool-meta"><span class="pill">Celular e computador</span><span class="pill">Licença permanente</span><span class="pill">Código de acesso</span></div>'+
+        '<div class="tool-price"><span class="value">R$ '+t.price+'</span><span class="once">pagamento único</span></div>'+
+        '<div class="tool-actions">'+
+          '<a href="'+BOT+'" target="_blank" rel="noopener" class="btn btn-buy"><i data-lucide="shopping-cart" style="width:15px;height:15px"></i> Comprar</a>'+
+          '<button class="btn btn-detail" data-idx="'+TOOLS.indexOf(t)+'"><i data-lucide="eye" style="width:15px;height:15px"></i> Detalhes</button>'+
+        '</div>';
+      toolsGrid.appendChild(card);
+    });
+    document.querySelectorAll(".btn-detail").forEach(function(btn){
+      btn.addEventListener("click", function(){ openModal(parseInt(btn.dataset.idx)); });
+    });
+    if(window.lucide) lucide.createIcons();
+    observeReveals();
+  }
+
+  // ===== Modal =====
+  var overlay = document.getElementById("modalOverlay");
+  var modalBody = document.getElementById("modalBody");
+  function openModal(i){
+    var t = TOOLS[i];
+    var feats = t.features.map(function(f){return '<li><i data-lucide="check" style="width:15px;height:15px"></i> '+f+'</li>'}).join("");
+    modalBody.innerHTML =
+      '<div class="modal-cat">'+t.catNome+'</div>'+
+      '<h3>'+t.nome+'</h3>'+
+      '<div class="modal-price">R$ '+t.price+' <span style="font-size:13px;color:var(--muted);font-weight:600">· pagamento único · licença permanente</span></div>'+
+      '<h5>Descrição completa</h5><p>'+t.full+'</p>'+
+      '<h5>Problema que resolve</h5><p>'+t.problem+'</p>'+
+      '<h5>Funcionalidades</h5><ul>'+feats+'</ul>'+
+      '<h5>Compatibilidade</h5><p>Funciona em qualquer navegador moderno (Chrome, Firefox, Safari, Edge) em celular ou computador. Requer internet apenas para validar o código de acesso ao abrir; depois funciona localmente.</p>'+
+      '<a href="'+BOT+'" target="_blank" rel="noopener" class="btn btn-buy"><i data-lucide="shopping-cart" style="width:18px;height:18px"></i> Comprar agora no Telegram</a>';
+    overlay.classList.add("open");
+    if(window.lucide) lucide.createIcons();
+    document.body.style.overflow="hidden";
+  }
+  document.getElementById("modalClose").addEventListener("click", function(){overlay.classList.remove("open");document.body.style.overflow=""});
+  overlay.addEventListener("click", function(e){if(e.target===overlay){overlay.classList.remove("open");document.body.style.overflow=""}});
+
+  // ===== Search =====
+  document.getElementById("searchInput").addEventListener("input", function(e){
+    searchQ = e.target.value; renderTools();
+  });
+
+  // ===== Problem suggester =====
+  var KEYMAP = {
+    dinheiro:["Dinheiro OS","Radar Financeiro","MEI Digital","Calculadora de Preço"],
+    financeiro:["Dinheiro OS","Radar Financeiro","MEI Digital"],
+    contas:["Casa no Automático","Dinheiro OS","Controle de Serviços"],
+    casa:["Casa no Automático","Agenda Inteligente"],
+    orcamento:["Orçamento Rápido","Proposta Pro","Calculadora de Preço"],
+    proposta:["Proposta Pro","Orçamento Rápido","Gerador de Contratos"],
+    contrato:["Gerador de Contratos","Recibo Fácil"],
+    recibo:["Recibo Fácil","Gerador de Contratos"],
+    estoque:["Controle de Estoque","MEI Digital"],
+    cliente:["Gestão de Clientes","Agenda Inteligente"],
+    agenda:["Agenda Inteligente","Vida OS","Gestão de Clientes"],
+    tarefa:["Vida OS","Memória Infinita","Casa no Automático"],
+    viagem:["Planejador de Viagem"],
+    decisao:["Escolha Certa","Oportunidade IA"],
+    negocio:["Oportunidade IA","Escolha Certa","MEI Digital"],
+    mei:["MEI Digital","Controle de Estoque","Gestão de Clientes"],
+    servico:["Ordem de Serviço","Controle de Serviços","Proposta Pro"],
+    cobranca:["Cobrança Fácil","Recibo Fácil"],
+    preco:["Calculadora de Preço","Orçamento Rápido"],
+    ideia:["Memória Infinita","Oportunidade IA"],
+    organizar:["Vida OS","Memória Infinita","Agenda Inteligente","Gestão de Clientes"]
+  };
+  document.getElementById("suggestBtn").addEventListener("click", function(){
+    var txt = document.getElementById("problemInput").value.toLowerCase();
+    var results = document.getElementById("suggestResults");
+    var found = {};
+    Object.keys(KEYMAP).forEach(function(k){
+      if(txt.indexOf(k)>-1){ KEYMAP[k].forEach(function(n){found[n]=true}); }
+    });
+    var names = Object.keys(found);
+    if(names.length===0){
+      results.innerHTML = '<div class="suggest-item"><span>Nenhuma sugestão exata. Tente descrever com palavras como: dinheiro, contrato, estoque, agenda, orçamento…</span></div>';
+    } else {
+      results.innerHTML = names.map(function(n){
+        var tool = TOOLS.find(function(t){return t.nome===n});
+        return '<div class="suggest-item"><div><strong>'+n+'</strong><br><span style="font-size:12.5px;color:var(--muted)">'+(tool?tool.short.substring(0,70)+"…":"")+'</span></div><span class="price">R$ '+(tool?tool.price:"--")+'</span><a href="'+BOT+'" target="_blank" rel="noopener" class="btn btn-buy" style="padding:8px 14px;font-size:12.5px">Comprar</a></div>';
+      }).join("");
+    }
+    results.classList.add("show");
+    if(window.lucide) lucide.createIcons();
+  });
+
+  // ===== FAQ accordion =====
+  document.querySelectorAll(".faq-q").forEach(function(q){
+    q.addEventListener("click", function(){
+      var item = q.parentElement;
+      var wasOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item").forEach(function(i){i.classList.remove("open");i.querySelector(".faq-a").style.maxHeight=null});
+      if(!wasOpen){
+        item.classList.add("open");
+        var a = item.querySelector(".faq-a");
+        a.style.maxHeight = a.scrollHeight + "px";
+      }
+    });
+  });
+
+  // ===== Mobile menu =====
+  document.getElementById("menuToggle").addEventListener("click", function(){document.getElementById("mobileMenu").classList.add("open")});
+  document.getElementById("menuClose").addEventListener("click", function(){document.getElementById("mobileMenu").classList.remove("open")});
+  document.querySelectorAll("#mobileMenu a").forEach(function(a){a.addEventListener("click", function(){document.getElementById("mobileMenu").classList.remove("open")})});
+
+  // ===== Stats =====
+  document.getElementById("statTools").textContent = TOOLS.length;
+  document.getElementById("statCats").textContent = CATS.length - 1;
+
+  // ===== Reveal on scroll =====
+  var io;
+  function observeReveals(){
+    if(!("IntersectionObserver" in window)){document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("visible")});return}
+    if(!io){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add("visible");io.unobserve(en.target)}});
+      },{threshold:.12});
+    }
+    document.querySelectorAll(".reveal:not(.visible)").forEach(function(el){io.observe(el)});
+  }
+
+  // ===== Active nav on scroll =====
+  var sections = ["inicio","categorias","sobre","faq"];
+  window.addEventListener("scroll", function(){
+    var cur = "inicio";
+    sections.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.getBoundingClientRect().top < 120) cur = id;
+    });
+    document.querySelectorAll(".sidebar .nav-links a").forEach(function(a){
+      a.classList.toggle("active", a.getAttribute("href")==="#"+cur);
+    });
+  }, {passive:true});
+
+  // ===== Init =====
+  renderTools();
+  observeReveals();
+  if(window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
